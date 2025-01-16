@@ -1,7 +1,7 @@
 name: common_form_fields_validator
-description: "A new Flutter package project."
+description: A Flutter package to validate common form fields such as email, phone number, and passwords with customizable rules.
 version: 0.0.1
-homepage:
+homepage: "https://github.com/MohdAmeer527/FormFieldValidator"
 
 environment:
   sdk: ^3.5.3
