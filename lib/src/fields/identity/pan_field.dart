@@ -5,7 +5,7 @@ import 'dart:ui' as ui;
 
 import 'package:common_form_fields_validator/src/core/validators.dart';
 
-class UPIField extends StatelessWidget {
+class PANNumberField extends StatelessWidget {
   final TextEditingController? controller;
   final String? label;
  
@@ -83,7 +83,7 @@ class UPIField extends StatelessWidget {
 
   final bool validate;
 
-  const UPIField({
+  const PANNumberField({
     Key? key,
     this.controller,
     this.label,
@@ -162,7 +162,7 @@ class UPIField extends StatelessWidget {
   InputDecoration get defaultDecoration =>
       decoration ??
       const InputDecoration(
-        labelText: "UPI ID",
+        labelText: "PAN Number",
       );
 
   @override
@@ -173,8 +173,8 @@ class UPIField extends StatelessWidget {
       initialValue: initialValue,
       focusNode: focusNode,
       decoration: defaultDecoration,
-      keyboardType: TextInputType.emailAddress,
-      textCapitalization: textCapitalization,
+      keyboardType: TextInputType.text,
+     
       textInputAction: textInputAction,
       style: style,
       strutStyle: strutStyle,
@@ -201,11 +201,13 @@ class UPIField extends StatelessWidget {
       onEditingComplete: onEditingComplete,
       onFieldSubmitted: onFieldSubmitted,
       onSaved: onSaved,
-    
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9@.]')),
+      validator: validate
+          ? (value) => FormValidators.validatePAN(value)
+          : defaultValidator,
+     inputFormatters: [
+        LengthLimitingTextInputFormatter(10),
+        FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9]')),
       ],
-      validator: validate ? (value)=> FormValidators.validateUPI(value): null,
       enabled: enabled,
       cursorWidth: cursorWidth,
       cursorHeight: cursorHeight,
@@ -213,6 +215,7 @@ class UPIField extends StatelessWidget {
       cursorColor: cursorColor,
       cursorErrorColor: cursorErrorColor,
       keyboardAppearance: keyboardAppearance,
+      textCapitalization: TextCapitalization.characters,
       scrollPadding: scrollPadding,
       enableInteractiveSelection: enableInteractiveSelection,
       selectionControls: selectionControls,
@@ -240,5 +243,6 @@ class UPIField extends StatelessWidget {
     );
   }
 }
+
 
 

@@ -5,10 +5,10 @@ import 'dart:ui' as ui;
 
 import 'package:common_form_fields_validator/src/core/validators.dart';
 
-class UPIField extends StatelessWidget {
+class DrivingLicenseField extends StatelessWidget {
   final TextEditingController? controller;
   final String? label;
- 
+
   final String? initialValue;
   final FocusNode? focusNode;
   final String? forceErrorText;
@@ -83,11 +83,10 @@ class UPIField extends StatelessWidget {
 
   final bool validate;
 
-  const UPIField({
+  const DrivingLicenseField({
     Key? key,
     this.controller,
     this.label,
-  
     this.initialValue,
     this.focusNode,
     this.forceErrorText,
@@ -162,7 +161,7 @@ class UPIField extends StatelessWidget {
   InputDecoration get defaultDecoration =>
       decoration ??
       const InputDecoration(
-        labelText: "UPI ID",
+        labelText: 'Driving License',
       );
 
   @override
@@ -173,8 +172,8 @@ class UPIField extends StatelessWidget {
       initialValue: initialValue,
       focusNode: focusNode,
       decoration: defaultDecoration,
-      keyboardType: TextInputType.emailAddress,
-      textCapitalization: textCapitalization,
+      keyboardType: TextInputType.text,
+      textCapitalization: TextCapitalization.characters,
       textInputAction: textInputAction,
       style: style,
       strutStyle: strutStyle,
@@ -201,11 +200,12 @@ class UPIField extends StatelessWidget {
       onEditingComplete: onEditingComplete,
       onFieldSubmitted: onFieldSubmitted,
       onSaved: onSaved,
-    
+      validator: validate
+          ? (value) => FormValidators.validateDrivingLicense(value)
+          : defaultValidator,
       inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9@.]')),
+        DrivingLicenseInputFormatter(),
       ],
-      validator: validate ? (value)=> FormValidators.validateUPI(value): null,
       enabled: enabled,
       cursorWidth: cursorWidth,
       cursorHeight: cursorHeight,
@@ -240,5 +240,3 @@ class UPIField extends StatelessWidget {
     );
   }
 }
-
-

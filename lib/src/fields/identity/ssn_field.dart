@@ -1,3 +1,8 @@
+import 'package:common_form_fields_validator/src/core/formatters.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:common_form_fields_validator/src/core/formatters.dart';
@@ -5,10 +10,10 @@ import 'dart:ui' as ui;
 
 import 'package:common_form_fields_validator/src/core/validators.dart';
 
-class UPIField extends StatelessWidget {
+class SSNField extends StatelessWidget {
   final TextEditingController? controller;
   final String? label;
- 
+
   final String? initialValue;
   final FocusNode? focusNode;
   final String? forceErrorText;
@@ -83,11 +88,10 @@ class UPIField extends StatelessWidget {
 
   final bool validate;
 
-  const UPIField({
+  const SSNField({
     Key? key,
     this.controller,
     this.label,
-  
     this.initialValue,
     this.focusNode,
     this.forceErrorText,
@@ -162,7 +166,7 @@ class UPIField extends StatelessWidget {
   InputDecoration get defaultDecoration =>
       decoration ??
       const InputDecoration(
-        labelText: "UPI ID",
+        labelText: "Social Security Number",
       );
 
   @override
@@ -173,7 +177,6 @@ class UPIField extends StatelessWidget {
       initialValue: initialValue,
       focusNode: focusNode,
       decoration: defaultDecoration,
-      keyboardType: TextInputType.emailAddress,
       textCapitalization: textCapitalization,
       textInputAction: textInputAction,
       style: style,
@@ -201,11 +204,14 @@ class UPIField extends StatelessWidget {
       onEditingComplete: onEditingComplete,
       onFieldSubmitted: onFieldSubmitted,
       onSaved: onSaved,
-    
+      keyboardType: TextInputType.number,
       inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9@.]')),
+        FilteringTextInputFormatter.digitsOnly,
+        LengthLimitingTextInputFormatter(9),
+        SSNFormatter(),
       ],
-      validator: validate ? (value)=> FormValidators.validateUPI(value): null,
+      validator:
+          validate ? (value) => FormValidators().validateSSN(value) : null,
       enabled: enabled,
       cursorWidth: cursorWidth,
       cursorHeight: cursorHeight,
@@ -240,5 +246,3 @@ class UPIField extends StatelessWidget {
     );
   }
 }
-
-

@@ -5,7 +5,7 @@ import 'dart:ui' as ui;
 
 import 'package:common_form_fields_validator/src/core/validators.dart';
 
-class UPIField extends StatelessWidget {
+class NameField extends StatelessWidget {
   final TextEditingController? controller;
   final String? label;
  
@@ -14,7 +14,7 @@ class UPIField extends StatelessWidget {
   final String? forceErrorText;
   final InputDecoration? decoration;
 
-  final TextCapitalization textCapitalization;
+
   final TextInputAction? textInputAction;
   final TextStyle? style;
   final StrutStyle? strutStyle;
@@ -83,16 +83,16 @@ class UPIField extends StatelessWidget {
 
   final bool validate;
 
-  const UPIField({
+  const NameField({
     Key? key,
     this.controller,
     this.label,
-  
+   
     this.initialValue,
     this.focusNode,
     this.forceErrorText,
     this.decoration,
-    this.textCapitalization = TextCapitalization.none,
+ 
     this.textInputAction,
     this.style,
     this.strutStyle,
@@ -162,7 +162,7 @@ class UPIField extends StatelessWidget {
   InputDecoration get defaultDecoration =>
       decoration ??
       const InputDecoration(
-        labelText: "UPI ID",
+        labelText: "Name",
       );
 
   @override
@@ -173,8 +173,8 @@ class UPIField extends StatelessWidget {
       initialValue: initialValue,
       focusNode: focusNode,
       decoration: defaultDecoration,
-      keyboardType: TextInputType.emailAddress,
-      textCapitalization: textCapitalization,
+      keyboardType: TextInputType.name,
+      textCapitalization: TextCapitalization.words,
       textInputAction: textInputAction,
       style: style,
       strutStyle: strutStyle,
@@ -201,11 +201,12 @@ class UPIField extends StatelessWidget {
       onEditingComplete: onEditingComplete,
       onFieldSubmitted: onFieldSubmitted,
       onSaved: onSaved,
-    
+      validator: validate
+          ? (value) => FormValidators.validateName(value)
+          : defaultValidator,
       inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9@.]')),
+        NameInputFormatter(),
       ],
-      validator: validate ? (value)=> FormValidators.validateUPI(value): null,
       enabled: enabled,
       cursorWidth: cursorWidth,
       cursorHeight: cursorHeight,
@@ -240,5 +241,3 @@ class UPIField extends StatelessWidget {
     );
   }
 }
-
-

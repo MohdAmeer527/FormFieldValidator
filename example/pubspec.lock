@@ -41,6 +41,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
+  common_form_fields_validator:
+    dependency: "direct main"
+    description:
+      name: common_form_fields_validator
+      sha256: "0c080840f6d3b0cced26de9dcfaf138fa1d0a4c1849ed9307b84d45706cd781d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   country_picker:
     dependency: "direct main"
     description:

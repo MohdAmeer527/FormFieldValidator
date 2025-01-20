@@ -5,7 +5,7 @@ import 'dart:ui' as ui;
 
 import 'package:common_form_fields_validator/src/core/validators.dart';
 
-class UPIField extends StatelessWidget {
+class IMEIField extends StatelessWidget {
   final TextEditingController? controller;
   final String? label;
  
@@ -83,7 +83,7 @@ class UPIField extends StatelessWidget {
 
   final bool validate;
 
-  const UPIField({
+  const IMEIField({
     Key? key,
     this.controller,
     this.label,
@@ -162,7 +162,7 @@ class UPIField extends StatelessWidget {
   InputDecoration get defaultDecoration =>
       decoration ??
       const InputDecoration(
-        labelText: "UPI ID",
+        labelText: "IMEI Number",
       );
 
   @override
@@ -173,8 +173,8 @@ class UPIField extends StatelessWidget {
       initialValue: initialValue,
       focusNode: focusNode,
       decoration: defaultDecoration,
-      keyboardType: TextInputType.emailAddress,
-      textCapitalization: textCapitalization,
+      keyboardType: TextInputType.number,
+      
       textInputAction: textInputAction,
       style: style,
       strutStyle: strutStyle,
@@ -201,11 +201,13 @@ class UPIField extends StatelessWidget {
       onEditingComplete: onEditingComplete,
       onFieldSubmitted: onFieldSubmitted,
       onSaved: onSaved,
-    
+      validator: validate
+          ? (value) => FormValidators().validateIMEI(value)
+          : defaultValidator,
       inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9@.]')),
+        FilteringTextInputFormatter.digitsOnly,
+        LengthLimitingTextInputFormatter(15),
       ],
-      validator: validate ? (value)=> FormValidators.validateUPI(value): null,
       enabled: enabled,
       cursorWidth: cursorWidth,
       cursorHeight: cursorHeight,
@@ -241,4 +243,5 @@ class UPIField extends StatelessWidget {
   }
 }
 
-
+     
+    

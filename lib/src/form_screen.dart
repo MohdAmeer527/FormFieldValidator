@@ -46,6 +46,7 @@ class _FormBuilderState extends State<FormBuilder> {
               SizedBox(height: widget.config.fieldSpacing),
             ]).toList()
               ..removeLast(),
+              const SizedBox(height: 20,),
             ElevatedButton(
               onPressed: _handleSubmit,
               child: Text(widget.submitButtonText),

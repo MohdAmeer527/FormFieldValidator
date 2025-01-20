@@ -1,95 +1,245 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../base_field.dart';
+import 'package:common_form_fields_validator/src/core/formatters.dart';
+import 'dart:ui' as ui;
 
-class CreditCardField extends BaseFormField {
+import 'package:common_form_fields_validator/src/core/validators.dart';
+
+class CreditCardField extends StatelessWidget {
+  final TextEditingController? controller;
+  final String? label;
+  final String? hint;
+  final String? initialValue;
+  final FocusNode? focusNode;
+  final String? forceErrorText;
+  final InputDecoration? decoration;
+
+  final TextCapitalization textCapitalization;
+  final TextInputAction? textInputAction;
+  final TextStyle? style;
+  final StrutStyle? strutStyle;
+  final TextDirection? textDirection;
+  final TextAlign textAlign;
+  final TextAlignVertical? textAlignVertical;
+  final bool autofocus;
+  final bool readOnly;
+  final Widget Function(BuildContext, EditableTextState)? contextMenuBuilder;
+  final bool? showCursor;
+  final String obscuringCharacter;
+  final bool obscureText;
+  final bool autocorrect;
+  final SmartDashesType? smartDashesType;
+  final SmartQuotesType? smartQuotesType;
+  final bool enableSuggestions;
+  final MaxLengthEnforcement? maxLengthEnforcement;
+  final int? maxLines;
+  final int? minLines;
+  final bool expands;
+  final int? maxLength;
+  final void Function(String)? onChanged;
+  final void Function()? onTap;
+  final bool onTapAlwaysCalled;
+  final void Function(PointerDownEvent)? onTapOutside;
+  final void Function()? onEditingComplete;
+  final void Function(String)? onFieldSubmitted;
+  final void Function(String?)? onSaved;
+
+  final bool? enabled;
+  final bool? ignorePointers;
+  final double cursorWidth;
+  final double? cursorHeight;
+  final Radius? cursorRadius;
+  final Color? cursorColor;
+  final Color? cursorErrorColor;
+  final Brightness? keyboardAppearance;
+  final EdgeInsets scrollPadding;
+  final bool? enableInteractiveSelection;
+  final TextSelectionControls? selectionControls;
+  final Widget? Function(BuildContext,
+      {required int currentLength,
+      required bool isFocused,
+      required int? maxLength})? buildCounter;
+  final ScrollPhysics? scrollPhysics;
+  final Iterable<String>? autofillHints;
+  final AutovalidateMode? autovalidateMode;
+  final ScrollController? scrollController;
+  final String? restorationId;
+  final bool enableIMEPersonalizedLearning;
+  final MouseCursor? mouseCursor;
+
+  final SpellCheckConfiguration? spellCheckConfiguration;
+  final TextMagnifierConfiguration? magnifierConfiguration;
+  final UndoHistoryController? undoController;
+  final void Function(String, Map<String, dynamic>)? onAppPrivateCommand;
+  final bool? cursorOpacityAnimates;
+  final ui.BoxHeightStyle selectionHeightStyle;
+  final ui.BoxWidthStyle selectionWidthStyle;
+
+  final ContentInsertionConfiguration? contentInsertionConfiguration;
+  final WidgetStatesController? statesController;
+  final Clip clipBehavior;
+  final bool scribbleEnabled;
+  final bool canRequestFocus;
+
+  final bool validate;
+
   const CreditCardField({
     Key? key,
-    required TextEditingController controller,
-    String label = 'Credit Card Number',
-    String hint = 'XXXX XXXX XXXX XXXX',
-    
-    super.onSaved,
-    super.isRequired = false,
-  }) : super(
-    key: key,
-    controller: controller,
-    label: label,
-    hint: hint,
-  );
+    this.controller,
+    this.label,
+    this.hint,
+    this.initialValue,
+    this.focusNode,
+    this.forceErrorText,
+    this.decoration,
+    this.textCapitalization = TextCapitalization.none,
+    this.textInputAction,
+    this.style,
+    this.strutStyle,
+    this.textDirection,
+    this.textAlign = TextAlign.start,
+    this.textAlignVertical,
+    this.autofocus = false,
+    this.readOnly = false,
+    this.showCursor,
+    this.obscuringCharacter = '•',
+    this.obscureText = false,
+    this.autocorrect = true,
+    this.smartDashesType,
+    this.smartQuotesType,
+    this.enableSuggestions = true,
+    this.maxLengthEnforcement,
+    this.maxLines = 1,
+    this.minLines,
+    this.expands = false,
+    this.maxLength,
+    this.onChanged,
+    this.onTap,
+    this.onTapAlwaysCalled = false,
+    this.onTapOutside,
+    this.onEditingComplete,
+    this.onFieldSubmitted,
+    this.onSaved,
+    this.enabled,
+    this.ignorePointers,
+    this.cursorWidth = 2.0,
+    this.cursorHeight,
+    this.cursorRadius,
+    this.cursorColor,
+    this.cursorErrorColor,
+    this.keyboardAppearance,
+    this.scrollPadding = const EdgeInsets.all(20.0),
+    this.enableInteractiveSelection,
+    this.selectionControls,
+    this.buildCounter,
+    this.scrollPhysics,
+    this.autofillHints,
+    this.autovalidateMode,
+    this.scrollController,
+    this.restorationId,
+    this.enableIMEPersonalizedLearning = true,
+    this.mouseCursor,
+    this.contextMenuBuilder,
+    this.spellCheckConfiguration,
+    this.magnifierConfiguration,
+    this.undoController,
+    this.onAppPrivateCommand,
+    this.cursorOpacityAnimates,
+    this.selectionHeightStyle = ui.BoxHeightStyle.tight,
+    this.selectionWidthStyle = ui.BoxWidthStyle.tight,
+    this.contentInsertionConfiguration,
+    this.statesController,
+    this.clipBehavior = Clip.hardEdge,
+    this.scribbleEnabled = true,
+    this.canRequestFocus = true,
+    this.validate = false,
+  }) : super(key: key);
+
+  String? defaultValidator(String? value) {
+    return null;
+  }
+
+  InputDecoration get defaultDecoration =>
+      decoration ??
+      const InputDecoration(
+        labelText: "Credit Card Number",
+      );
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      key: key,
       controller: controller,
+      initialValue: initialValue,
+      focusNode: focusNode,
       decoration: defaultDecoration,
+      textCapitalization: textCapitalization,
+      textInputAction: textInputAction,
+      style: style,
+      strutStyle: strutStyle,
+      textDirection: textDirection,
+      textAlign: textAlign,
+      textAlignVertical: textAlignVertical,
+      autofocus: autofocus,
+      readOnly: readOnly,
+      showCursor: showCursor,
+      obscuringCharacter: obscuringCharacter,
+      obscureText: obscureText,
+      autocorrect: autocorrect,
+      smartDashesType: smartDashesType,
+      smartQuotesType: smartQuotesType,
+      enableSuggestions: enableSuggestions,
+      maxLengthEnforcement: maxLengthEnforcement,
+      maxLines: maxLines,
+      minLines: minLines,
+      expands: expands,
+      maxLength: maxLength,
+      onChanged: onChanged,
+      onTap: onTap,
+      onTapOutside: onTapOutside,
+      onEditingComplete: onEditingComplete,
+      onFieldSubmitted: onFieldSubmitted,
+      onSaved: onSaved,
       keyboardType: TextInputType.number,
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
         LengthLimitingTextInputFormatter(16),
-        _CreditCardFormatter(),
+        CreditCardFormatter(),
       ],
-      validator: (value) {
-        if (value != null && value.isNotEmpty) {
-          final cleanValue = value.replaceAll(RegExp(r'\s'), '');
-          if (cleanValue.length < 13 || cleanValue.length > 19) {
-            return 'Invalid credit card number length';
-          }
-          if (!_luhnCheck(cleanValue)) {
-            return 'Invalid credit card number';
-          }
-        }
-        return defaultValidator(value);
-      },
-      onSaved: onSaved,
-      
-      
-    );
-  }
-
-  bool _luhnCheck(String number) {
-    int sum = 0;
-    bool alternate = false;
-    
-    for (int i = number.length - 1; i >= 0; i--) {
-      int n = int.parse(number[i]);
-      if (alternate) {
-        n *= 2;
-        if (n > 9) {
-          n = (n % 10) + 1;
-        }
-      }
-      sum += n;
-      alternate = !alternate;
-    }
-    
-    return sum % 10 == 0;
-  }
-}
-
-class _CreditCardFormatter extends TextInputFormatter {
-  @override
-  TextEditingValue formatEditUpdate(
-    TextEditingValue oldValue,
-    TextEditingValue newValue,
-  ) {
-    final text = newValue.text.replaceAll(RegExp(r'\s'), '');
-    var newText = '';
-    var selectionIndex = newValue.selection.end;
-
-    for (var i = 0; i < text.length; i++) {
-      if (i > 0 && i % 4 == 0) {
-        newText += ' ';
-        if (newValue.selection.end >= i) {
-          selectionIndex++;
-        }
-      }
-      newText += text[i];
-    }
-
-    return TextEditingValue(
-      text: newText,
-      selection: TextSelection.collapsed(offset: selectionIndex),
+      validator: validate
+          ? (value) => FormValidators().validateCardNumber(value)
+          : null,
+      enabled: enabled,
+      cursorWidth: cursorWidth,
+      cursorHeight: cursorHeight,
+      cursorRadius: cursorRadius,
+      cursorColor: cursorColor,
+      cursorErrorColor: cursorErrorColor,
+      keyboardAppearance: keyboardAppearance,
+      scrollPadding: scrollPadding,
+      enableInteractiveSelection: enableInteractiveSelection,
+      selectionControls: selectionControls,
+      buildCounter: buildCounter,
+      scrollPhysics: scrollPhysics,
+      autofillHints: autofillHints,
+      autovalidateMode: autovalidateMode,
+      scrollController: scrollController,
+      restorationId: restorationId,
+      enableIMEPersonalizedLearning: enableIMEPersonalizedLearning,
+      mouseCursor: mouseCursor,
+      contextMenuBuilder: contextMenuBuilder,
+      spellCheckConfiguration: spellCheckConfiguration,
+      magnifierConfiguration: magnifierConfiguration,
+      undoController: undoController,
+      onAppPrivateCommand: onAppPrivateCommand,
+      cursorOpacityAnimates: cursorOpacityAnimates,
+      selectionHeightStyle: selectionHeightStyle,
+      selectionWidthStyle: selectionWidthStyle,
+      contentInsertionConfiguration: contentInsertionConfiguration,
+      statesController: statesController,
+      clipBehavior: clipBehavior,
+      scribbleEnabled: scribbleEnabled,
+      canRequestFocus: canRequestFocus,
     );
   }
 }
